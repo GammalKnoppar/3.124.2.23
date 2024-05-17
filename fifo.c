@@ -8,24 +8,26 @@
 int main() {
 	int fd, result;
 	size_t size;
-	char string[] = "Gr.3.124.2.23", resstrng[13];
+	char string[] = "Gr.3.124.2.23", resstring[13];
 	char name[] = "fifo.fifo";
+	/*
 	if(mknod(name, S_IFIFO | 0666, 0) < 0) {
 		printf("Не удаётся создать IFIFO\n");
 		exit(-1);
 	}
+	*/	
 	if((result = fork()) < 0) {
 		printf("Не удалось создать дочерний процесс\n");
 			exit(-1);
 	}
 	else if (result > 0) {
-		if((fd = open(nsme, O_WRONLY)) < 0) {
+		if((fd = open(name, O_WRONLY)) < 0) {
 			printf("Не удалось открыть FIFO на запись\n");
 			exit(-1);
 		}
-		size_ write(fd, string, 13);
+		size = write(fd, string, 13);
 		if(size != 13) {
-			printf("Не удалось записать строку целиком\n")
+			printf("Не удалось записать строку целиком\n");
 			exit(-1);
 		}
 		close(fd);
@@ -34,7 +36,7 @@ int main() {
 	else {
 		if((fd = open(name, O_RDONLY)) < 0) {
 			printf("Не удалось открыть всю чтение\n");
-			exit(-1):
+			exit(-1);
 		}
 		size= read(fd, resstring, 13);
 		if (size != 13) {
@@ -46,4 +48,3 @@ int main() {
 	}
 	return 0;
 }
-
